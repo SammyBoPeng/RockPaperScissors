@@ -1,10 +1,94 @@
 const choices = ['Rock', 'Paper', 'Scissors']
+const body = document.querySelector('body');
+const rockBtn = document.createElement("button");
+const paperBtn = document.createElement("button");
+const scissorsBtn = document.createElement("button");
+const logArea = document.createElement('div');
+let userScore = 0;
+let computerScore = 0;
+
+rockBtn.textContent = 'Rock';
+paperBtn.textContent = 'Paper';
+scissorsBtn.textContent = 'Scissors';
+
+body.append(rockBtn, paperBtn, scissorsBtn, logArea);
+
+
 
 function getComputerChoice(){
     let index = Math.floor(Math.random()*3);
     return choices[index];
 }
 
+function appendNewLine(text){
+    logArea.innerHTML += '<br>';
+    logArea.innerHTML += text;
+}
+
+function playRound(userSelection){
+    let computerSelection = getComputerChoice();
+    switch(choices.indexOf(userSelection) - choices.indexOf(computerSelection)){
+        case 0:
+            appendNewLine(`Nobody win, your choice is ${userSelection}, computer is ${computerSelection}`);
+            //return 'tie';
+            break;
+        case 1:
+            appendNewLine(`You win, ${userSelection} beats ${computerSelection}`)
+            userScore += 1;
+            //return 'userWin';
+            break;
+        case 2:
+            appendNewLine(`You lose, ${computerSelection} beats ${userSelection}`)
+            computerScore += 1;
+            //return 'computerWin';
+            break;
+        case -1:
+            appendNewLine(`You lose, ${computerSelection} beats ${userSelection}`)
+            computerScore += 1;
+            //return 'computerWin';
+            break;
+        case -2:
+            appendNewLine(`You win, ${userSelection} beats ${computerSelection}`)
+            userScore += 1;
+            //return 'userWin';
+            break;     
+    }
+    appendNewLine(`Your score is ${userScore}. Computer's score is ${computerScore}!`);
+}
+
+function winTheGame(){
+    if(userScore === 5){
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorsBtn.disabled = true;
+        appendNewLine('You win!')
+    }
+    
+    if(computerScore === 5){
+        rockBtn.disabled = true;
+        paperBtn.disabled = true;
+        scissorsBtn.disabled = true;
+        appendNewLine('Computer win!')
+    }
+}
+
+rockBtn.addEventListener('click', () => {
+    playRound('Rock');
+    winTheGame();
+})
+
+paperBtn.addEventListener('click', () => {
+    playRound('Paper');
+    winTheGame();
+})
+
+scissorsBtn.addEventListener('click',() => {
+    playRound('Scissors');
+    winTheGame();
+})
+
+
+/*
 function getUserChoice(){
     let input = prompt("Give me a choice among 'Rock', 'Paper', 'Scissors'. ");
     let userInput = input.toLowerCase();
@@ -18,29 +102,9 @@ function getUserChoice(){
         getUserChoice();
     }
 }
+*/
 
-
-
-function playRound(userSelection, computerSelection){
-    switch(choices.indexOf(userSelection) - choices.indexOf(computerSelection)){
-        case 0:
-            console.log(`Nobody win, your choice is ${userSelection}, computer is ${computerSelection}`);
-            return 'tie';
-        case 1:
-            console.log(`You win, ${userSelection} beats ${computerSelection}`)
-            return 'userWin';
-        case 2:
-            console.log(`You lose, ${computerSelection} beats ${userSelection}`)
-            return 'computerWin';
-        case -1:
-            console.log(`You lose, ${computerSelection} beats ${userSelection}`)
-            return 'computerWin';
-        case -2:
-            console.log(`You win, ${userSelection} beats ${computerSelection}`)
-            return 'userWin';       
-    }
-}
-
+/*
 function playGame(){
     
     let userScore = 0;
@@ -77,3 +141,4 @@ function playGame(){
 }
 
 playGame()
+*/
